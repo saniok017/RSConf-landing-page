@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { CardGroup } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
@@ -6,7 +7,15 @@ import producerState from '../utils/producerState';
 
 import Person from './person';
 import Search from './search';
+import Toggle from './menu/toggle';
 
+import producersRus from '../../data/producers-rus.json';
+import producersEng from '../../data/producers-eng.json';
+import producersby from '../../data/producers-by.json';
+
+const {
+  producers, producerOfTheDay, pictures, lang,
+} = producerState;
 export default class PersonListHandler extends Component {
   constructor(props) {
     super(props);
@@ -15,17 +24,21 @@ export default class PersonListHandler extends Component {
 
     this.state = {
       resultSearch: '',
+      producers,
+      producerOfTheDay,
+      pictures,
+      lang,
     };
   }
 
-  static getFiltered(producers, filter) {
+  static getFiltered(producersToFilter, filter) {
     if (filter.length === 0) {
-      return producers;
+      return producersToFilter;
     }
 
     const forfilter = filter.toLowerCase().trim();
 
-    const producersFiltered = producers.filter((producer) => {
+    const producersFiltered = producersToFilter.filter((producer) => {
       const isNameMatch = producer.forSearch[0].toLowerCase().indexOf(forfilter) !== -1;
       const isCityMatch = producer.forSearch[1].toLowerCase().indexOf(forfilter) !== -1;
       const isBirthMatch = producer.forSearch[2].toLowerCase().indexOf(forfilter) !== -1;
@@ -55,15 +68,32 @@ export default class PersonListHandler extends Component {
   render() {
     const { resultSearch } = this.state;
 
-    const producers = PersonListHandler.getFiltered(producerState.producers, resultSearch);
+    const currentProducers = PersonListHandler.getFiltered(this.state.producers, resultSearch);
     const persons = [];
 
-    producerState.producers.map(producer => persons.push(producer.person));
+    this.state.producers.map(producer => persons.push(producer.person));
 
     return (
       <CardGroup>
+        <Toggle onClick={(i) => {
+          if (i === 'en') {
+            this.state.producers = producersEng;
+            this.state.lang = i;
+            this.forceUpdate();
+          } else if (i === 'ru') {
+            this.state.producers = producersRus;
+            this.state.lang = i;
+            this.forceUpdate();
+          } else {
+            this.state.producers = producersby;
+            this.state.lang = i;
+            this.forceUpdate();
+          }
+          console.log(this.state);
+        }}
+        />
         <Search onChange={this.inputTextHandler} />
-        {producers.map(person => (
+        {currentProducers.map(person => (
           // eslint-disable-next-line jsx-a11y/click-events-have-key-events
           <div
             role="button"
@@ -75,7 +105,6 @@ export default class PersonListHandler extends Component {
             <Person
               person={person.person}
               linkImage={producerState.pictures[persons.indexOf(person.person)][0]}
-              linkButton="/person"
               buttonName={<Trans>More</Trans>}
               size="15"
             />

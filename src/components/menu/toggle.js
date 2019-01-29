@@ -1,27 +1,22 @@
 /* eslint-disable */
-import React, { Component } from 'react'
-import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
-import i18n from 'i18next'
-import { Trans } from 'react-i18next'
-
-import producerState from '../../utils/producerState'
-
-import producersRus from '../../../data/producers-rus.json'
-import producersEng from '../../../data/producers-eng.json'
+import React, { Component } from 'react';
+import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+import i18n from 'i18next';
+import { Trans } from 'react-i18next';
 
 export default class Toggle extends Component {
-  changeLang(e, lang) {
+  changeLang(lang) {
     // e.preventDefault();
     // console.log(lang);
 
-    i18n.changeLanguage(lang);
+    i18n.changeLanguage(e, lang);
 
     producerState.lang = lang;
     if (lang === 'ru') {
       producerState.producers = producersRus;
     } else if (lang === 'en') {
       producerState.producers = producersEng;
-    }
+    } else producerState.producers = producersby;
     // console.log(producerState)
   }
 
@@ -29,14 +24,17 @@ export default class Toggle extends Component {
     return (
       <ButtonToolbar>
         <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
-          <ToggleButton value={1} onClick={(e) => this.changeLang(e, 'ru')}>
+          <ToggleButton value={1} onClick={() => this.props.onClick('ru')}>
             <Trans>Rus</Trans>
           </ToggleButton>
-          <ToggleButton value={2} onClick={(e) => this.changeLang(e, 'en')}>
+          <ToggleButton value={2} onClick={() => this.props.onClick('en')}>
             <Trans>Eng</Trans>
+          </ToggleButton>
+          <ToggleButton value={3} onClick={() => this.props.onClick('by')}>
+            <Trans>BY</Trans>
           </ToggleButton>
         </ToggleButtonGroup>
       </ButtonToolbar>
-    )
+    );
   }
 }

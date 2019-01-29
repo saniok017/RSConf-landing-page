@@ -11,8 +11,7 @@ class Person extends Component {
 state = {}
 
 componentDidMount() {
-  this.state.person = localStorage.getItem('producerName');
-  this.render();
+  this.setState({ person: localStorage.getItem('producerName') });
 }
 
 render() {

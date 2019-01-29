@@ -16,12 +16,12 @@ class Person extends Component {
   constructor({ person }) {
     super(person);
 
-    this.state = {};
+    this.state = { person };
     this.state.currentProducer = producerState.producers.find(
-      producer => producer.person === person,
+      producer => producer.person === this.state.person,
     );
     this.state.currentProducerIndex = producerState.producers.findIndex(
-      producer => producer.person === person,
+      producer => producer.person === this.state.person,
     );
 
     this.state.dataFilmorgaphy = this.state.currentProducer.filmography;
@@ -33,17 +33,17 @@ class Person extends Component {
   }
 
   // if (!localStorage.producerName) localStorage.setItem('producerName', '');
-  componentWillReceiveProps() {
-    this.props.person = localStorage.getItem('producerName');
-  }
+  // componentWillReceiveProps() {
+  //   this.state.person = localStorage.getItem('producerName');
+  // }
 
   render() {
     return (
       <Fragment>
-        <h1>{this.person}</h1>
+        <h1>{this.state.person}</h1>
 
         <Figure>
-          <Figure.Image width={400} height={500} alt={this.person} src={this.state.photo} />
+          <Figure.Image width={400} height={500} alt={this.state.person} src={this.state.photo} />
         </Figure>
 
         <Biography biography={this.state.dataBiography} />
@@ -57,7 +57,7 @@ class Person extends Component {
 }
 
 Person.defaultProps = {
-  person: 'Белоусов Олег Павлович',
+  person: 'Гинцбург Александр Ильич',
   video: 'https://www.youtube.com/embed/hFgB5E0uL_Y',
 };
 

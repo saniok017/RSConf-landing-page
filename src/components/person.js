@@ -2,12 +2,12 @@ import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Trans } from 'react-i18next';
+import { Link } from 'gatsby';
 
 const Person = ({
   nickname,
   person,
   linkImage,
-  linkButton,
   buttonName,
   size,
 }) => (
@@ -20,8 +20,10 @@ const Person = ({
     <Card.Body>
       {nickname !== '' && <Card.Title>{nickname}</Card.Title>}
       <Card.Text style={{ height: '50px' }}>{person}</Card.Text>
-      <Card.Link href={linkButton}>
-        <Button variant="primary">{buttonName}</Button>
+      <Card.Link>
+        <Link to="/person">
+          <Button variant="primary">{buttonName}</Button>
+        </Link>
       </Card.Link>
     </Card.Body>
   </Card>
@@ -33,14 +35,12 @@ Person.defaultProps = {
   size: '12',
   person: '',
   linkImage: '',
-  linkButton: '',
 };
 
 Person.propTypes = {
   nickname: PropTypes.string,
   person: PropTypes.string,
   linkImage: PropTypes.string,
-  linkButton: PropTypes.string,
   buttonName: PropTypes.string,
   size: PropTypes.string,
 };
