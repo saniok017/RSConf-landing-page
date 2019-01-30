@@ -10,6 +10,7 @@ const Person = ({
   linkImage,
   buttonName,
   size,
+  linkButton,
 }) => (
   <Card style={{ width: `${size}rem`, margin: '1em' }}>
     <Card.Img
@@ -21,7 +22,7 @@ const Person = ({
       {nickname !== '' && <Card.Title>{nickname}</Card.Title>}
       <Card.Text style={{ height: '50px' }}>{person}</Card.Text>
       <Card.Link>
-        <Link to="/person">
+        <Link to={linkButton}>
           <Button variant="primary">{buttonName}</Button>
         </Link>
       </Card.Link>
@@ -35,6 +36,7 @@ Person.defaultProps = {
   size: '12',
   person: '',
   linkImage: '',
+  linkButton: '/person',
 };
 
 Person.propTypes = {
@@ -43,6 +45,7 @@ Person.propTypes = {
   linkImage: PropTypes.string,
   buttonName: PropTypes.string,
   size: PropTypes.string,
+  linkButton: PropTypes.string,
 };
 
 export default Person;

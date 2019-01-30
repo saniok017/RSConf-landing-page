@@ -6,7 +6,7 @@ import { Link } from 'gatsby';
 const Navigation = () => (
   <Nav className="mr-auto" style={{ fontSize: '1.5em' }}>
     <Nav.Link>
-      <Link to="/">
+      <Link to="/" style={{ margin: '0 10px', textDecoration: 'none' }}>
         <Trans>Home</Trans>
       </Link>
     </Nav.Link>

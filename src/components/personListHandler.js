@@ -4,18 +4,11 @@ import { CardGroup } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
 
 import producerState from '../utils/producerState';
-
+import defineProducer from '../utils/defineProducers';
 import Person from './person';
 import Search from './search';
 import Toggle from './menu/toggle';
 
-import producersRus from '../../data/producers-rus.json';
-import producersEng from '../../data/producers-eng.json';
-import producersby from '../../data/producers-by.json';
-
-const {
-  producers, producerOfTheDay, pictures, lang,
-} = producerState;
 export default class PersonListHandler extends Component {
   constructor(props) {
     super(props);
@@ -24,11 +17,12 @@ export default class PersonListHandler extends Component {
 
     this.state = {
       resultSearch: '',
-      producers,
-      producerOfTheDay,
-      pictures,
-      lang,
+      pictures: producerState.pictures,
     };
+
+    if (typeof window !== 'undefined') {
+      this.state.producers = defineProducer(localStorage.getItem('language'));
+    }
   }
 
   static getFiltered(producersToFilter, filter) {
@@ -76,20 +70,9 @@ export default class PersonListHandler extends Component {
     return (
       <CardGroup>
         <Toggle onClick={(i) => {
-          if (i === 'en') {
-            this.state.producers = producersEng;
-            this.state.lang = i;
-            this.forceUpdate();
-          } else if (i === 'ru') {
-            this.state.producers = producersRus;
-            this.state.lang = i;
-            this.forceUpdate();
-          } else {
-            this.state.producers = producersby;
-            this.state.lang = i;
-            this.forceUpdate();
-          }
-          console.log(this.state);
+          this.state.producers = defineProducer(i);
+          this.forceUpdate();
+          localStorage.setItem('language', `${i}`);
         }}
         />
         <Search onChange={this.inputTextHandler} />
@@ -104,7 +87,7 @@ export default class PersonListHandler extends Component {
           >
             <Person
               person={person.person}
-              linkImage={producerState.pictures[persons.indexOf(person.person)][0]}
+              linkImage={this.state.pictures[persons.indexOf(person.person)][0]}
               buttonName={<Trans>More</Trans>}
               size="15"
             />

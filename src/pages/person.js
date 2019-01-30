@@ -10,15 +10,19 @@ import Producer from '../components/producer/producer';
 class Person extends Component {
 state = {}
 
-componentDidMount() {
-  this.setState({ person: localStorage.getItem('producerName') });
+componentWillMount() {
+  if (typeof window !== 'undefined') {
+    this.state.person = localStorage.getItem('producerName');
+    this.state.language = localStorage.getItem('language');
+  }
 }
+
 
 render() {
   return (
     <Layout>
       <SEO title="Person" />
-      <Producer person={this.state.person} />
+      <Producer person={this.state.person} language={this.state.language} />
       <Link to="/"><Trans>Back</Trans></Link>
     </Layout>
   );

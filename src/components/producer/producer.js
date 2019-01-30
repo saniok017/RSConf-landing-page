@@ -11,19 +11,20 @@ import Video from './video/video';
 import Map from './map';
 
 import producerState from '../../utils/producerState';
+import defineProducer from '../../utils/defineProducers';
 
 class Person extends Component {
-  constructor({ person }) {
-    super(person);
+  constructor({ person, language }) {
+    super(person, language);
 
-    this.state = { person };
-    this.state.currentProducer = producerState.producers.find(
+    this.state = { person, language };
+
+    this.state.currentProducer = defineProducer(this.state.language).find(
       producer => producer.person === this.state.person,
     );
-    this.state.currentProducerIndex = producerState.producers.findIndex(
+    this.state.currentProducerIndex = defineProducer(this.state.language).findIndex(
       producer => producer.person === this.state.person,
     );
-
     this.state.dataFilmorgaphy = this.state.currentProducer.filmography;
     this.state.dataBiography = this.state.currentProducer.biography;
     this.state.mapCoordinates = this.state.currentProducer.markOnMap;
@@ -31,11 +32,6 @@ class Person extends Component {
     this.state.allPhotos = producerState.pictures[this.state.currentProducerIndex];
     this.state.video = this.state.currentProducer.videoLinks;
   }
-
-  // if (!localStorage.producerName) localStorage.setItem('producerName', '');
-  // componentWillReceiveProps() {
-  //   this.state.person = localStorage.getItem('producerName');
-  // }
 
   render() {
     return (
@@ -59,12 +55,14 @@ class Person extends Component {
 Person.defaultProps = {
   person: 'Гинцбург Александр Ильич',
   video: 'https://www.youtube.com/embed/hFgB5E0uL_Y',
+  language: 'ru',
 };
 
 Person.propTypes = {
   person: PropTypes.string,
   // eslint-disable-next-line react/no-unused-prop-types
   video: PropTypes.string,
+  language: PropTypes.string,
 };
 
 export default Person;
