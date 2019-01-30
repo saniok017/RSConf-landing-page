@@ -17,6 +17,7 @@ export default class PersonListHandler extends Component {
 
     this.state = {
       resultSearch: '',
+      producers: producerState.producers,
       pictures: producerState.pictures,
     };
 
