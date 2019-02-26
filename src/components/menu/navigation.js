@@ -5,17 +5,13 @@ import { Link } from 'gatsby';
 
 const Navigation = () => (
   <Nav className="mr-auto" style={{ fontSize: '1.5em' }}>
-    <Nav.Link>
-      <Link to="/" style={{ margin: '0 10px', textDecoration: 'none' }}>
-        <Trans>Home</Trans>
-      </Link>
-    </Nav.Link>
+    <Link to="/" style={{ margin: '0 10px', textDecoration: 'none' }}>
+      <Trans>Home</Trans>
+    </Link>
 
-    <Nav.Link>
-      <Link to="/team">
-        <Trans>OurTeam</Trans>
-      </Link>
-    </Nav.Link>
+    <Link to="/team" style={{ margin: '0 10px', textDecoration: 'none' }}>
+      <Trans>OurTeam</Trans>
+    </Link>
   </Nav>
 );
 

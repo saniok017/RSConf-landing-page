@@ -32,8 +32,6 @@ import producer5_5 from '../images/producers/5/5.jpg';
 import producer5_6 from '../images/producers/5/6.jpg';
 
 import producers from '../../data/producers-rus.json';
-import producersEng from '../../data/producers-eng.json';
-import producersBy from '../../data/producers-by.json';
 
 const pictures = [
   [producer0_0, producer0_1, producer0_2],
@@ -44,14 +42,26 @@ const pictures = [
   [producer5_0, producer5_1, producer5_2, producer5_3, producer5_4, producer5_5, producer5_6],
 ];
 
+// const producerOfTheDay = Math.floor(Math.random() * producers.length);
+// let producerOfTheDay = Math.floor(Math.random() * (dateNow.getDay() - 2));
+
 const dateNow = new Date();
-let producerOfTheDay = Math.floor(Math.random() * (dateNow.getDay() - 2));
+let producerOfTheDay = dateNow.getDay() - 2;
 if (producerOfTheDay < 0) producerOfTheDay = 0;
+
+if (typeof window !== 'undefined') {
+  window.localStorage.setItem(
+    'producerState',
+    JSON.stringify({
+      producers,
+      pictures,
+      lang: 'ru',
+    }),
+  );
+}
 
 export default {
   producers,
-  producersEng,
-  producersBy,
   producerOfTheDay,
   pictures,
   lang: 'ru',

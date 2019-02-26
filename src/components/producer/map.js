@@ -16,16 +16,18 @@ export default class Map extends Component {
     return (
       <div
         style={{
-          width: '800px',
-          margin: '30px auto',
+          width: '100%',
+          position: 'relative',
         }}
       >
         <iframe
           title="001"
           src={coordinates}
           style={{
-            width: '800px',
+            width: '100%',
+            minWidth: '300px',
             height: '450px',
+            padding: '10px',
             frameborder: '0',
             border: '0',
           }}

@@ -45,7 +45,7 @@ export default class Video extends Component {
       <Fragment>
         <div
           style={{
-            width: '560px',
+            width: '90%',
             margin: '30px auto',
           }}
         >
@@ -57,9 +57,9 @@ export default class Video extends Component {
             style={{
               position: 'relative',
               top: '175px',
-              width: '560px',
-              height: '315px',
-              frameborder: '0',
+              right: '-5%',
+              width: '90%',
+              height: '350px',
             }}
           />
 
@@ -70,9 +70,10 @@ export default class Video extends Component {
             tabIndex={0}
             style={{
               position: 'relative',
-              width: '560px',
-              height: '315px',
-              top: '-175px',
+              height: '350px',
+              top: '-205px',
+              width: '90%',
+              right: '-5%',
               opacity: '0',
               cursor: 'pointer',
             }}
